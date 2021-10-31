@@ -2,7 +2,7 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
-//const routes = require('./controllers');
+const routes = require('./controllers');
 const sequelize = require('./config/connection');
 const models = require('./models');
 
@@ -32,7 +32,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Link in all the routes
-//app.use(routes);
+app.use(routes);
 
 //Sync database to models and start server on the port
 sequelize.sync({ force: false }).then(() => {

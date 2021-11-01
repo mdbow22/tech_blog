@@ -8,7 +8,7 @@ router.post('/', async (req, res) => {
         //Hash password before storing in database
         const hashword = await bcrypt.hash(req.body.password, 10);
 
-        const newUser = User.create({
+        const newUser = await User.create({
             username: req.body.username,
             password: hashword,
             email: req.body.email
@@ -16,6 +16,7 @@ router.post('/', async (req, res) => {
 
         req.session.save(() => {
             req.session.loggedIn = true;
+            req.session.userId = newUser.id;
             res.status(200).json(newUser);
         });
 
@@ -53,13 +54,26 @@ router.post('/login', async (req, res) => {
         //save the session so they're logged in
         req.session.save(() => {
             req.session.loggedIn = true;
-            res.status(200).json('Now logged in');
+            req.session.userId = theUser.id;
+            res.status(200).json(theUser);
         })
 
     } catch (err) {
         console.log(err);
         res.status(500).json('Unable to log in');
     }
+});
+
+//logout a user
+router.post('/logout', (req, res) => {
+    if (req.session.loggedIn) {
+        //destroy the session
+        req.session.destroy(() => {
+          res.status(204).end();
+        });
+      } else {
+        res.status(404).end();
+      }
 });
 
 module.exports = router;

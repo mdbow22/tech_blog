@@ -1,3 +1,9 @@
+body {
+    height: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
 h1 {
     font-size: 3em;
     font-weight: 100;
@@ -8,4 +14,8 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
+}
+
+footer {
+    margin-top: auto;
 }

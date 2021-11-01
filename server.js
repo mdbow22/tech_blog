@@ -9,7 +9,7 @@ const models = require('./models');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-//const hbs = exphbs.create({ helpers });
+const hbs = exphbs.create({ });
 
 //Create sessions for users
 const sess = {
@@ -21,8 +21,8 @@ const sess = {
 app.use(session(sess));
 
 //Set handlebars as view engine for front-end
-//app.engine('handlebars', hbs.engine);
-//app.set('view engine', 'handlebars');
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
 //middleware to parse JSON and URL info on requests
 app.use(express.json());

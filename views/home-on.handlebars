@@ -1,0 +1,15 @@
+
+<h1>Recent Posts</h1>
+
+{{#each post}}
+<article class="card my-4 shadow bg-secondary bg-gradient text-light">
+    <div class="card-body">
+        <div class="post-head">
+        <h3 class="card-title"><a href="/posts/{{id}}">{{post_title}}</a></h3>
+        <h5>created: {{created_at}}</h5>
+        </div>
+        <p class="card-text">{{username}}</p>
+        <p class="card-text py-2">{{post_body}}</p>
+    </div>
+</article>
+{{/each}}

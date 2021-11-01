@@ -17,11 +17,8 @@ User.init(
             unique: true
         },
         password: {
-            type: DataTypes.STRING(45),
+            type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                len: [8, 45]
-            }
         },
         email: {
             type: DataTypes.STRING(50),

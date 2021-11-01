@@ -1,38 +1,34 @@
-//create a new user
+//Login an existing user
 
 //Selectors
-const newUser = document.getElementById('newUsername');
-const newEmail = document.getElementById('newEmail');
-const newPassword = document.getElementById('newPassword');
-const signUp = document.getElementById('signUp');
+const username = document.getElementById('username');
+const password = document.getElementById('password');
+const login = document.getElementById('loginBtn');
 
-//Send new user data to server to create the user
-const signUpUser = async (e) => {
-    //prevent page from reloading
+//Send data to server to login user
+const loginUser = async (e) => {
+    //stop page from reloading
     e.preventDefault();
 
-    if(newUser.value && newPassword.value && newEmail.value) {
-        //package data into an object
-        const userData = {
-            username: newUser.value,
-            password: newPassword.value,
-            email: newEmail.value
-        }
+    //Package data
+    const loginInfo = {
+        username: username.value,
+        password: password.value
+    }
 
-        //send data to server
-        const createUser = await fetch('/api/users', {
-            method: 'POST',
-            body: JSON.stringify(userData),
-            headers: { 'Content-Type': 'application/json'}
-        });
+    //send data to server
+    const loginStatus = await fetch('/api/users/login', {
+        method: 'POST',
+        body: JSON.stringify(loginInfo),
+        headers: { 'Content-Type': 'application/json'}
+    });
 
-        if(createUser.ok) {
-            document.location.reload();
-        } else {
-            alert('could not sign you up');
-        }
+    if(loginStatus.ok) {
+        document.location.replace('/');
+    } else {
+        alert('incorrect username and/or password');
     }
 }
 
-//event listener
-signUp.addEventListener('click', signUpUser);
+//Event listener
+login.addEventListener('click', loginUser);

@@ -1,15 +1,39 @@
-const { Post } = require('../models');
+const { Post, User } = require('../models');
 
 const router = require('express').Router();
 
-router.get('/', (req, res) => {
-    if(!req.session.loggedIn) {
-        res.render('home-out');
-    } else {
-        res.render('home-on', {
-            loggedIn: req.session.loggedIn
-        });
+router.get('/', async (req, res) => {
+    try {
+        if(!req.session.loggedIn) {
+            res.render('home-out');
+        } else {
+
+            //get all posts in db and include post's author
+            const posts = await Post.findAll({
+                include: [
+                    {
+                        model: User,
+                        attributes: ['username']
+                    }
+                ],
+                //order posts by most recent first
+                order: [['createdAt', 'DESC']]
+            });
+
+            const post = posts.map((el) => el.get({ plain: true }));
+
+            //res.status(200).json(allPosts);
+
+            res.render('home-on', {
+                post,
+                loggedIn: req.session.loggedIn
+            });
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).json('Internal Server Error');
     }
+    
 });
 
 router.get('/login', (req, res) => {

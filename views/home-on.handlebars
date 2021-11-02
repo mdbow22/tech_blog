@@ -5,10 +5,10 @@
 <article class="card my-4 shadow bg-secondary bg-gradient text-light">
     <div class="card-body">
         <div class="post-head">
-        <h3 class="card-title"><a href="/posts/{{id}}">{{post_title}}</a></h3>
-        <h5>created: {{created_at}}</h5>
+        <a href="/posts/{{id}}" class="text-light text-decoration-none"><h3 class="card-title">{{post_title}}</h3></a>
+        <h5>created: {{format_date createdAt}}</h5>
         </div>
-        <p class="card-text">{{username}}</p>
+        <p class="card-text">{{user.username}}</p>
         <p class="card-text py-2">{{post_body}}</p>
     </div>
 </article>

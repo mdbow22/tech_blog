@@ -23,3 +23,7 @@ footer {
 .list-group-item {
     cursor: pointer;
 }
+
+#postHead {
+    border-bottom: 1px solid #666;
+}

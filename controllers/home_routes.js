@@ -75,4 +75,37 @@ router.get('/dashboard', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+
+        if(!req.session.loggedIn) {
+            res.redirect('/login');
+            return;
+        }
+
+        const retrievePost = await Post.findByPk(req.params.id, {
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ]
+        });
+
+        if(!retrievePost) {
+            res.status(404).json('Post Not Found');
+            return;
+        }
+
+        const post = retrievePost.get({plain: true});
+
+        res.render('single-post', { 
+            post, 
+            loggedIn: req.session.loggedIn});
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 module.exports = router;

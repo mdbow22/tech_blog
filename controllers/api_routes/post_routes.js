@@ -1,6 +1,21 @@
 const { Post } = require('../../models');
 const router = require('express').Router();
 
+//Get a single Post
+router.get('/:id', async (req, res) => {
+    try {
+        const post = await Post.findByPk(req.params.id, {
+            attributes: ['post_title','post_body']
+        });
+
+        const plainPost = post.get({plain: true});
+        res.status(200).json(plainPost);
+
+    } catch (err) {
+        res.status(500).json(err);
+    }
+});
+
 //Create a new post
 router.post('/', async (req, res) => {
     try {

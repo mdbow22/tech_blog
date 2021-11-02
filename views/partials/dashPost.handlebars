@@ -1,6 +1,6 @@
 {{#each posts}}
-<div data-id="{{id}}" class="d-flex justify-content-between align-items-center list-group-item list-group-item-action">
+<button role="button" data-id="{{id}}" data-bs-toggle="modal" data-bs-target="#editPostModal" class="d-flex justify-content-between align-items-center list-group-item list-group-item-action">
     <h5>{{post_title}}</h5>
     <h6>created: {{format_date createdAt}}</h6>
-</div>
+</button>
 {{/each}}

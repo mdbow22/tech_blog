@@ -21,7 +21,12 @@
     {{/if}}
     <div class="row justify-content-center mt-3">
         <div class="col-md-8">
-        <button type="button" id="newPostBtn" class="btn btn-primary">Create New Post</button>
+        <button type="button" id="postModal" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newPostModal">Create New Post</button>
         </div>        
     </div>
 </section>
+
+<!-- Modals for creating/editing posts -->
+{{> postModals}}
+
+<script src="./assets/dashboard.js"></script>

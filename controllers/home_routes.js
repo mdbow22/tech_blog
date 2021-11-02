@@ -28,14 +28,13 @@ router.get('/dashboard', async (req, res) => {
         //retrieve all of the users posts from db
         const userPosts = await Post.findAll({
             where: {
-                author_id: 1 //req.session.userId
+                author_id: req.session.userId
             }
         });
-
         
         //clean up data and send to client
         if(userPosts.length > 0) {
-            const posts = userPosts.get({ plain: true });
+            const posts = userPosts.map((post) => post.get({ plain: true }));
             res.render('dashboard', {posts, loggedIn: req.session.loggedIn});
         } else {
             res.render('dashboard', {

@@ -19,3 +19,7 @@ h1 {
 footer {
     margin-top: auto;
 }
+
+.list-group-item {
+    cursor: pointer;
+}

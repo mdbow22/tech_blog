@@ -1,8 +1,10 @@
+{{#each comment}}
 <div class="mt-4">
     <p>
-        Here is a comment
+        {{body}}
     </p>
     <p class="blockquote-footer">
-        awbow22 on 11/2/2021
+        {{user.username}} on {{format_date createdAt}}
     </p>
 </div>
+{{/each}}

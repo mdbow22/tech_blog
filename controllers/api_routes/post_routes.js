@@ -57,4 +57,34 @@ router.put('/:id', async (req, res) => {
     
 });
 
+//delete a post
+router.delete('/:id', async (req, res) => {
+    try {
+        const postToDel = await Post.findByPk(req.params.id);
+
+        //verify that requester is author of post
+        if(postToDel.author_id != req.session.userId) {
+            res.status(403).json('No access to delete post');
+            return;
+        }
+
+        //delete record from database
+        const deletePost = await Post.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+
+        if(deletePost[0] > 0) {
+            res.status(200).json('Post Deleted');
+        } else {
+            res.status(400).json('Could not delete post. Check request');
+        }
+
+    } catch (err) {
+        res.status(500).json('Internal Server Error');
+    }
+    
+});
+
 module.exports = router;

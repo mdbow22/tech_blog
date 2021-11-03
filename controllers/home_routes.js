@@ -1,4 +1,4 @@
-const { Post, User } = require('../models');
+const { Post, User, Comment } = require('../models');
 
 const router = require('express').Router();
 
@@ -92,16 +92,36 @@ router.get('/:id', async (req, res) => {
             ]
         });
 
+        //retrieve all comments associated with the post
+        const findComments = await retrievePost.getComments({
+            include: [
+                {
+                    model: User,
+                    attributes: ['username']
+                }
+            ]
+        });
+
         if(!retrievePost) {
             res.status(404).json('Post Not Found');
             return;
         }
 
         const post = retrievePost.get({plain: true});
+        const comment = findComments.map((c) => c.get({plain: true}));
 
-        res.render('single-post', { 
-            post, 
-            loggedIn: req.session.loggedIn});
+        if(comment.length === 0) {
+            res.render('single-post', { 
+                post, 
+                loggedIn: req.session.loggedIn});
+        } else {
+            res.render('single-post', {
+                post,
+                comment,
+                loggedIn: req.session.loggedIn
+            });
+        }
+        
 
     } catch (err) {
         res.status(500).json(err);

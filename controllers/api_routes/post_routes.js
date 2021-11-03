@@ -63,10 +63,10 @@ router.delete('/:id', async (req, res) => {
         const postToDel = await Post.findByPk(req.params.id);
 
         //verify that requester is author of post
-        if(postToDel.author_id != req.session.userId) {
+        /* if(postToDel.author_id != req.session.userId) {
             res.status(403).json('No access to delete post');
             return;
-        }
+        } */
 
         //delete record from database
         const deletePost = await Post.destroy({
@@ -75,8 +75,8 @@ router.delete('/:id', async (req, res) => {
             }
         });
 
-        if(deletePost[0] > 0) {
-            res.status(200).json('Post Deleted');
+        if(deletePost > 0) {
+            res.status(200).json('Post deleted');
         } else {
             res.status(400).json('Could not delete post. Check request');
         }

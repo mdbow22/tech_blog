@@ -67,7 +67,23 @@ const savePost = async (e) => {
     }
 };
 
+//Delete a post
+const deleteIt = async () => {
+    const deletion = await fetch(`/api/posts/${postId}`,
+    {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json'}
+    });
+
+    if(deletion.ok) {
+        document.location.reload();
+    } else {
+        alert('unable to delete post');
+    }
+};
+
 //Event Listeners
 document.getElementById('newPostBtn').addEventListener('click', createPost);
 document.getElementById('editPostModal').addEventListener('shown.bs.modal', editPost);
 document.getElementById('editPostBtn').addEventListener('click', savePost);
+document.getElementById('deletePost').addEventListener('click', deleteIt);
